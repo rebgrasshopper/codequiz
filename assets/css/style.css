@@ -1,0 +1,64 @@
+body {
+    height: 100%;
+    margin: 0 auto;
+}
+
+header {
+    margin-top: 5rem;
+    font-size: 7vw;
+    padding: 3vw;
+    background: yellowgreen;
+    border: rgb(194, 247, 88) solid 2px;
+    border-radius: 15px;
+}
+
+#quiz-box {
+
+    background: #20a39e;
+    border: #32f7f0 2px solid;
+    padding: 7vw;
+    margin: auto;
+    margin-top: 2vw;
+    border-radius: 15px;
+}
+
+#question-el {
+    background: rgb(192, 17, 192);
+    border: fuchsia solid 2px;
+    padding: 2vw;
+    border-radius: 15px;
+    min-width: 200px;
+    
+}
+
+#button-box {
+    margin-top: 5vw;
+    border-radius: 15px;
+}
+
+.btn-warning {
+    background: #EF5B5B;
+    border-width: 2px;
+}
+
+#time-left {
+    height: 60px;
+    width: 60px;
+    margin: 5px;
+    margin-top: 10px;
+    border-radius: 50%;
+    font-size: 1.5em;
+    background-color: #EF5B5B;
+    border: none;
+    color: #fdfdfd;
+    cursor: pointer;
+}
+
+textPath {
+    font-size: 2.1vw;
+    stroke: yellowgreen;
+}
+
+#timer-text {
+    color: black;
+}

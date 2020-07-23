@@ -5,11 +5,12 @@
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
 <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+<link href='./assets/css/style.css' rel='stylesheet' type='text/css'>
 
 <title>Basic JavaScript Code Quiz</title>
 </head>
 
-<body class='d-flex justify-content-center bg-dark'>
+<body class='bg-dark text-light text-center'>
 
     
 
@@ -17,28 +18,40 @@
 
         <!--HEADER-->
         <div class="row">
-            <header>JavaScript Code Quiz</header>
+            <header class="col-12">JavaScript Code Quiz</header>
         </div><!--/row-->
 
         <!--QUIZ BOX-->
-        <div class="row">
-            <div class="col-12" id='quiz-box'>
+        <div class="row d-flex align-items-center">
+            <div id="time-left"></div>
+            <div class="d-flex flex-column" id='quiz-box'>
 
                 <!--QUESTION ELEMENT-->
-                <div class="row">
-                    <div class="col-12" id="question-el">Question:</div>
-                </div><!--row-->
+                <div id="question-el">Question:</div>
 
                 <!--MULTIPLE CHOICE ELEMENT-->
-                <div class="row">
-                    <div class="col-6 mx-auto">
-                        <button id="a">yo</button>
-                        <button id="b">what</button>
-                        <button id="c">is</button>
-                        <button id="d">up?</button>
-                    </div>
-                </div>
+                    <div id='button-box' class="d-flex flex-column">
+                        <button class="btn btn-warning my-2" id="a">yo</button>
+                        <button class="btn btn-warning my-2" id="b">what</button>
+                        <button class="btn btn-warning my-2" id="c">is</button>
+                        <button class="btn btn-warning my-2" id="d">up?</button>
+                    </div><!--button-box-->
             </div><!--/col-12 quiz-box-->
+
+            <div class="wrapper">
+            <div id="time-left"></div>
+            <svg width="100" height="100">
+                <!--<circle cx="50" cy="50" r="50" />-->
+                <path id="curve" d="M20,30 a1,1 0 0,0 60,0 a2,2 0 0,0 -60,0" fill="#EF5B5B" />
+                <text width="100">
+                    <textPath id="timer-text" startOffset="0"  xlink:href="#curve" text-anchor="middle">60</textPath>
+                </text>
+                <text width="100">
+                  <textPath alignment-baseline="hanging" xlink:href="#curve">
+                    T i m e &nbsp L e f t
+                  </textPath>
+                </text>
+              </svg>
         </div><!--/row-->
     </section>
     <script src='assets/js/script.js'></script>
