@@ -23,7 +23,19 @@
 
         <!--QUIZ BOX-->
         <div class="row d-flex align-items-center">
-            <div id="time-left"></div>
+
+            <!--SCORE-->
+            <svg width="100" height="100">
+                <path id="curve" d="M20,30 a1,1 0 0,0 60,0 a2,2 0 0,0 -60,0" fill="#EF5B5B" />
+                <text id='score-text' x="50%" y="40%" text-anchor="middle">0</text>    
+                <text width="100">
+                  <textPath alignment-baseline="hanging" xlink:href="#curve">
+                    &nbsp &nbsp &nbspS c o r e
+                  </textPath>
+                </text>
+              </svg><!--circle cobbled together from many codepen examples-->
+
+
             <div class="d-flex flex-column" id='quiz-box'>
 
                 <!--QUESTION ELEMENT-->
@@ -38,21 +50,18 @@
                     </div><!--button-box-->
             </div><!--/col-12 quiz-box-->
 
-            <div class="wrapper">
-            <div id="time-left"></div>
+
+            <!--TIME LEFT-->
             <svg width="100" height="100">
-                <!--<circle cx="50" cy="50" r="50" />-->
                 <path id="curve" d="M20,30 a1,1 0 0,0 60,0 a2,2 0 0,0 -60,0" fill="#EF5B5B" />
-                <text width="100">
-                    <textPath id="timer-text" startOffset="0"  xlink:href="#curve" text-anchor="middle">60</textPath>
-                </text>
+                <text id='timer-text' x="50%" y="40%" text-anchor="middle">60</text>    
                 <text width="100">
                   <textPath alignment-baseline="hanging" xlink:href="#curve">
                     T i m e &nbsp L e f t
                   </textPath>
                 </text>
               </svg>
-        </div><!--/row-->
+
     </section>
     <script src='assets/js/script.js'></script>
 </body>
