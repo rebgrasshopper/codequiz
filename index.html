@@ -22,7 +22,7 @@
         </div><!--/row-->
 
         <!--QUIZ BOX-->
-        <div class="row d-flex align-items-center">
+        <div class="row d-flex justify-content-around">
 
             <!--SCORE-->
             <svg width="100" height="100">
@@ -35,22 +35,6 @@
                 </text>
               </svg><!--circle cobbled together from many codepen examples-->
 
-
-            <div class="d-flex flex-column" id='quiz-box'>
-
-                <!--QUESTION ELEMENT-->
-                <div id="question-el">Question:</div>
-
-                <!--MULTIPLE CHOICE ELEMENT-->
-                    <div id='button-box' class="d-flex flex-column">
-                        <button class="btn btn-warning my-2" id="a">yo</button>
-                        <button class="btn btn-warning my-2" id="b">what</button>
-                        <button class="btn btn-warning my-2" id="c">is</button>
-                        <button class="btn btn-warning my-2" id="d">up?</button>
-                    </div><!--button-box-->
-            </div><!--/col-12 quiz-box-->
-
-
             <!--TIME LEFT-->
             <svg width="100" height="100">
                 <path id="curve" d="M20,30 a1,1 0 0,0 60,0 a2,2 0 0,0 -60,0" fill="#EF5B5B" />
@@ -61,6 +45,26 @@
                   </textPath>
                 </text>
               </svg>
+
+
+            </div><!--/row-->
+            <div class='row'>
+            <div class="d-flex flex-column" id='quiz-box'>
+
+                <!--QUESTION ELEMENT-->
+                <button id="question-el" class="">Click to begin</button>
+
+                <!--MULTIPLE CHOICE ELEMENT-->
+                    <div id='button-box' class="d-flex flex-column">
+                        <button class="btn btn-warning my-2 not-active" id="a"></button>
+                        <button class="btn btn-warning my-2 not-active" id="b"></button>
+                        <button class="btn btn-warning my-2 not-active" id="c"></button>
+                        <button class="btn btn-warning my-2 not-active" id="d"></button>
+                    </div><!--button-box-->
+            </div><!--/col-12 quiz-box-->
+
+
+
 
     </section>
     <script src='assets/js/script.js'></script>

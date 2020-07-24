@@ -3,6 +3,16 @@ body {
     margin: 0 auto;
 }
 
+
+
+
+
+
+
+
+
+/*  MAIN CONTENT  */
+
 header {
     margin-top: 5rem;
     font-size: 7vw;
@@ -11,6 +21,44 @@ header {
     border: rgb(194, 247, 88) solid 2px;
     border-radius: 15px;
 }
+
+
+
+
+/*   BUBBLES   */
+
+SVG {
+    margin-top: 5vw;
+}
+
+#time-left {
+    height: 60px;
+    width: 60px;
+    margin: 5px;
+    margin-top: 10px;
+    border-radius: 50%;
+    font-size: 1.5em;
+    background-color: #EF5B5B;
+    border: none;
+    color: #fdfdfd;
+    cursor: pointer;
+}
+
+textPath {
+    font-size: 15px;
+    fill: yellowgreen;
+}
+
+#timer-text, #score-text {
+    font-size: 4vw;
+
+}
+
+
+
+
+
+/*  QUIZ  */
 
 #quiz-box {
 
@@ -28,7 +76,11 @@ header {
     padding: 2vw;
     border-radius: 15px;
     min-width: 200px;
-    
+    color: #fff;
+}
+
+.not-active {
+    pointer-events: none;
 }
 
 #button-box {
@@ -39,27 +91,4 @@ header {
 .btn-warning {
     background: #EF5B5B;
     border-width: 2px;
-}
-
-#time-left {
-    height: 60px;
-    width: 60px;
-    margin: 5px;
-    margin-top: 10px;
-    border-radius: 50%;
-    font-size: 1.5em;
-    background-color: #EF5B5B;
-    border: none;
-    color: #fdfdfd;
-    cursor: pointer;
-}
-
-textPath {
-    font-size: 2.1vw;
-    fill: yellowgreen;
-}
-
-#timer-text, #score-text {
-    font-size: 4vw;
-
 }
