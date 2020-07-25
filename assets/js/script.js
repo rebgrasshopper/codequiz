@@ -90,6 +90,17 @@ function writeScore() {
     scoreText.textContent = currentScore;
 }
 
+function getUserInitials() {
+    console.log("this is for getting initials");
+}
+
+function writeInitials(){
+    for (answer of answers){
+        answer.textContent = "---";
+    }
+};
+
+
 
 
 
@@ -166,7 +177,7 @@ function endQuiz() {
     const instructionDiv = document.createElement("div");
     instructionDiv.textContent = "Type your initials here!";
     quizBox.prepend(instructionDiv);
-    questionEl.innerHTML = "<input id='userInitials'></input>";
+    questionEl.innerHTML = "<input id='userInitials' class='input-style'></input>";
     questionEl.style.padding = "2vw";
     questionEl.style.border = "fuchsia solid 2px";
     //new div's event listener
@@ -176,7 +187,8 @@ function endQuiz() {
             e.target.value = '';
             questionEl.innerHTML = "⭐High Score Hall of Fame⭐"
             instructionDiv.classList.add("hidden");
-            //set up basic look in case no initials
+            //set up initials
+            getUserInitials();
             writeInitials();
     }//end if
 });//end questionEl event listener function
@@ -188,11 +200,6 @@ function endQuiz() {
     };//end for
 };//end endQuiz()
 
-function writeInitials(){
-    for (answer of answers){
-        answer.textContent = "---";
-    }
-};
 
 
 

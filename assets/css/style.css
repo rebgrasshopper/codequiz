@@ -111,3 +111,9 @@ textPath {
 .hidden {
     display: none;
 }
+
+.input-style {
+    background-color: fuchsia;
+    border: 2px solid;
+    border-radius: 15px;
+}
