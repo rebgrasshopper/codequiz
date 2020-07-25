@@ -76,7 +76,7 @@ let pastQuestionIndexes = [];
 let pastAnswerIndexes = [];
 let index;
 let currentScore = 0;
-let userInitials = [];
+let userInitials = getLocalStorageOrDefault("userInitials");
 
 
 
@@ -100,8 +100,19 @@ function writeInitials(){
     }
 };
 
+function getLocalStorageOrDefault(key) {
+    if (localStorage.getItem(key) === null) {
+        return ["no users recorded!"];
+    } else {
+        return JSON.parse(localStorage.getItem(key));
+    }
+}
 
-
+function addToLocalStorage(key, value) {
+    let storedItem = getLocalStorageOrDefault(key);
+    storedItem.push(value);
+    localStorage.setItem(key, JSON.stringify(storedItem));
+}
 
 
 
