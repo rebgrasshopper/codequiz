@@ -2,71 +2,78 @@
 <html lang='en-us'>
 
 <head>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
-<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
-<link href='./assets/css/style.css' rel='stylesheet' type='text/css'>
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
+    integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+  <link href='./assets/css/style.css' rel='stylesheet' type='text/css'>
 
-<title>Basic JavaScript Code Quiz</title>
+  <title>Basic JavaScript Code Quiz</title>
 </head>
 
 <body class='bg-dark text-light text-center'>
 
-    
-
-    <section class="main container">
-
-        <!--HEADER-->
-        <div class="row">
-            <header class="col-12">JavaScript Code Quiz</header>
-        </div><!--/row-->
-
-        <!--QUIZ BOX-->
-        <div class="row d-flex justify-content-around">
-
-            <!--SCORE-->
-            <svg width="100" height="100">
-                <path id="curve" d="M20,30 a1,1 0 0,0 60,0 a2,2 0 0,0 -60,0" fill="#EF5B5B" />
-                <text id='score-text' x="50%" y="40%" text-anchor="middle">0</text>    
-                <text width="100">
-                  <textPath alignment-baseline="hanging" xlink:href="#curve">
-                    &nbsp &nbsp &nbspS c o r e
-                  </textPath>
-                </text>
-              </svg><!--circle cobbled together from many codepen examples-->
-
-            <!--TIME LEFT-->
-            <svg width="100" height="100">
-                <path id="curve" d="M20,30 a1,1 0 0,0 60,0 a2,2 0 0,0 -60,0" fill="#EF5B5B" />
-                <text id='timer-text' x="50%" y="40%" text-anchor="middle">60</text>    
-                <text width="100">
-                  <textPath alignment-baseline="hanging" xlink:href="#curve">
-                    T i m e &nbsp L e f t
-                  </textPath>
-                </text>
-              </svg>
 
 
-            </div><!--/row-->
-            <div class='row'>
-            <div class="d-flex flex-column" id='quiz-box'>
+  <section class="main container">
 
-                <!--QUESTION ELEMENT-->
-                <button id="question-el" class="">Click to begin</button>
+    <!--HEADER-->
+    <div class="row">
+      <header class="col-12">JavaScript Code Quiz</header>
+    </div>
+    <!--/row-->
 
-                <!--MULTIPLE CHOICE ELEMENT-->
-                    <div id='button-box' class="d-flex flex-column">
-                        <button class="btn btn-warning my-2 not-active" id="a"></button>
-                        <button class="btn btn-warning my-2 not-active" id="b"></button>
-                        <button class="btn btn-warning my-2 not-active" id="c"></button>
-                        <button class="btn btn-warning my-2 not-active" id="d"></button>
-                    </div><!--button-box-->
-            </div><!--/col-12 quiz-box-->
+    <!--QUIZ BOX-->
+    <div class="row d-flex justify-content-around">
+
+      <!--SCORE-->
+      <svg width="100" height="100">
+        <path id="curve" d="M20,30 a1,1 0 0,0 60,0 a2,2 0 0,0 -60,0" fill="#EF5B5B" />
+        <text id='score-text' x="50%" y="40%" text-anchor="middle">0</text>
+        <text width="100">
+          <textPath alignment-baseline="hanging" xlink:href="#curve">
+            &nbsp &nbsp &nbspS c o r e
+          </textPath>
+        </text>
+      </svg>
+      <!--circle cobbled together from many codepen examples-->
+
+      <!--TIME LEFT-->
+      <svg width="100" height="100">
+        <path id="curve" d="M20,30 a1,1 0 0,0 60,0 a2,2 0 0,0 -60,0" fill="#EF5B5B" />
+        <text id='timer-text' x="50%" y="40%" text-anchor="middle">60</text>
+        <text width="100">
+          <textPath alignment-baseline="hanging" xlink:href="#curve">
+            T i m e &nbsp L e f t
+          </textPath>
+        </text>
+      </svg>
+
+
+    </div>
+    <!--/row-->
+    <div class='row'>
+      <div class="d-flex flex-column" id='quiz-box'>
+
+        <!--QUESTION ELEMENT-->
+        <div id="question-el"><button id="question-button" class="">Click to begin</button></div>
+
+        <!--MULTIPLE CHOICE ELEMENT-->
+        <div id='button-box' class="d-flex flex-column">
+          <button class="btn btn-warning my-2 not-active" id="a"></button>
+          <button class="btn btn-warning my-2 not-active" id="b"></button>
+          <button class="btn btn-warning my-2 not-active" id="c"></button>
+          <button class="btn btn-warning my-2 not-active" id="d"></button>
+        </div>
+        <!--button-box-->
+      </div>
+      <!--/col-12 quiz-box-->
 
 
 
 
-    </section>
-    <script src='assets/js/script.js'></script>
+  </section>
+  <script src='assets/js/script.js'></script>
 </body>
+
 </html>

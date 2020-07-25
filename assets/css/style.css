@@ -72,6 +72,13 @@ textPath {
 
 #question-el {
     background: rgb(192, 17, 192);
+    border-radius: 15px;
+    min-width: 200px;
+    color: #fff;
+}
+
+#question-button {
+    background: rgb(192, 17, 192);
     border: fuchsia solid 2px;
     padding: 2vw;
     border-radius: 15px;
@@ -91,4 +98,16 @@ textPath {
 .btn-warning {
     background: #EF5B5B;
     border-width: 2px;
+}
+
+
+
+
+
+
+
+
+
+.hidden {
+    display: none;
 }

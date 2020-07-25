@@ -1,8 +1,10 @@
 //ELEMENT VARIABLES
 
+const quizBox = document.getElementById("quiz-box");
 const scoreText = document.getElementById("score-text");
 const timeText = document.getElementById("timer-text");
 const questionEl = document.getElementById("question-el");
+const questionButton = document.getElementById("question-button");
 const buttonBoxEl = document.getElementById("button-box");
 const answerA = document.getElementById("a");
 const answerB = document.getElementById("b");
@@ -72,8 +74,9 @@ const JSQuestions = [
 
 let pastQuestionIndexes = [];
 let pastAnswerIndexes = [];
-let i;
+let index;
 let currentScore = 0;
+let userInitials = [];
 
 
 
@@ -91,65 +94,107 @@ function writeScore() {
 
 
 
-
 //FUNCTIONS
 
 //switch to next
 function nextQuestion(){
-    i = random(JSQuestions.length);
     pastAnswerIndexes = [];
-    let p = 0;
-    while (p===0) {
-        if (pastQuestionIndexes.indexOf(i) === -1) {
-            console.log("I made a new question!");
-            questionEl.textContent = JSQuestions[i].question;
-            let n = 0;
-    
-            while (n<4) {
-                k = random(4);
-                if (pastAnswerIndexes.indexOf(k) === -1) {
-                    pastAnswerIndexes.push(k);
-                    answers[n].textContent = JSQuestions[i].multiples[k];
-                    n++;
-                };
-            };
-            p++
-        } else {
-            console.log("I didn't make a new question this");
+    done = false;
+    while (done === false) {
+        index = random(JSQuestions.length);
+        if (JSQuestions.length === pastQuestionIndexes.length) {
+            done = true;
+            endQuiz();
         }
-        pastQuestionIndexes.push(i);
-    };
-};
+        if (pastQuestionIndexes.indexOf(index) === -1) {
+            pastQuestionIndexes.push(index);
+
+            //question setup
+            questionButton.textContent = JSQuestions[index].question;
+            for (let p=0; p<4;) {
+                let whichAnswer = random(4);
+                if (pastAnswerIndexes.indexOf(whichAnswer) === -1) {
+                    answers[p].textContent = JSQuestions[index].multiples[whichAnswer];
+                    pastAnswerIndexes.push(whichAnswer);
+                    p++;
+                }//end if
+            }//end for
+
+            done = true;//found a unique index and filled the elements with its information
+        }//end else
+    }//end while
+};//end nextQuestion()
 
 
 //begin quiz
 function beginQuiz() {
-    questionEl.classList.add("not-active");
+    questionButton.classList.add("not-active");
     for (button of answers) {
         button.classList.remove("not-active");
-    };
+    };//end for
     nextQuestion();
-};
+};//end beginQuiz()
 
 
 //select multiple choice answer
 function submitAnswer(event) {
     if (event.target.matches("button")) {
         let userAnswer = event.target.textContent;
-        console.log(`user answer: ${userAnswer}, correct answer: ${JSQuestions[i].answer}`);
-        if (userAnswer === JSQuestions[i].answer) {
+        console.log(`user answer: ${userAnswer}, correct answer: ${JSQuestions[index].answer}`);
+        if (userAnswer === JSQuestions[index].answer) {
             currentScore += 1;
             writeScore();
             nextQuestion();
-            console.log("right " + JSQuestions[i].answer);
+            console.log("right " + JSQuestions[index].answer);
         } else {
             currentScore -= 1;
-            writeScore();
+            writeScore();            
             nextQuestion();
-            console.log("wrong " + JSQuestions[i].answer);
-        }
+            console.log("wrong " + JSQuestions[index].answer);
+        };//end if else
+    };//end if
+};//end submitAnswer()
+
+
+
+//end of quiz behavior
+function endQuiz() {
+    console.log("quiz ended");
+
+
+    //new div
+    const instructionDiv = document.createElement("div");
+    instructionDiv.textContent = "Type your initials here!";
+    quizBox.prepend(instructionDiv);
+    questionEl.innerHTML = "<input id='userInitials'></input>";
+    questionEl.style.padding = "2vw";
+    questionEl.style.border = "fuchsia solid 2px";
+    //new div's event listener
+    questionEl.addEventListener("keypress", function(e){
+        if (e.key === "Enter") {
+            userInitials.push(e.target.value);
+            e.target.value = '';
+            questionEl.innerHTML = "⭐High Score Hall of Fame⭐"
+            instructionDiv.classList.add("hidden");
+            //set up basic look in case no initials
+            writeInitials();
+    }//end if
+});//end questionEl event listener function
+
+    const endMessage = ["Good", "job", "you're", "done!"]
+    for (let k = 0; k<4; k++) {
+        answers[k].classList.add("not-active");
+        answers[k].textContent = endMessage[k];
+    };//end for
+};//end endQuiz()
+
+function writeInitials(){
+    for (answer of answers){
+        answer.textContent = "---";
     }
-}
+};
+
+
 
 
 
@@ -166,5 +211,5 @@ writeScore();
 
 //eventListeners
 
-questionEl.addEventListener("click", beginQuiz);
+questionButton.addEventListener("click", beginQuiz);
 buttonBoxEl.addEventListener("click", submitAnswer);
