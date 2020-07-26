@@ -70,6 +70,15 @@ textPath {
     border-radius: 15px;
 }
 
+#input-el {
+    background: rgb(192, 17, 192);
+    border-radius: 15px;
+    min-width: 200px;
+    padding: 2vw;
+    color: #fff;
+    border: fuchsia solid 2px;
+}
+
 #question-el {
     background: rgb(192, 17, 192);
     border-radius: 15px;

@@ -3,8 +3,11 @@
 const quizBox = document.getElementById("quiz-box");
 const scoreText = document.getElementById("score-text");
 const timeText = document.getElementById("timer-text");
+const instructionsEl = document.getElementById("instructions-el")
+const inputEl = document.getElementById("input-el");
 const questionEl = document.getElementById("question-el");
 const questionButton = document.getElementById("question-button");
+const initialsBoxEl = document.getElementById("initials-box");
 const buttonBoxEl = document.getElementById("button-box");
 const answerA = document.getElementById("a");
 const answerB = document.getElementById("b");
@@ -45,7 +48,7 @@ const JSQuestions = [
     {
     question:'What is an example of camel casing?',
     multiples:['CaMeLvAr', 'camelvar', 'cAMELVAR', 'camelVar'],
-    answer:'camvelVar',
+    answer:'camelVar',
     },
     {
     question:'How do you put in multi-line comments in JavaScript?',
@@ -77,6 +80,8 @@ let pastAnswerIndexes = [];
 let index;
 let currentScore = 0;
 let userInitials = getLocalStorageOrDefault("userInitials");
+let timeLeft = 60;
+let questionTimer;
 
 
 
@@ -90,14 +95,22 @@ function writeScore() {
     scoreText.textContent = currentScore;
 };
 
+function writeTime() {
+    timeText.textContent = timeLeft;
+};
+
 function writeInitials(){
     let initialsArray = getLocalStorageOrDefault("userInitials");
-    buttonBoxEl.innerHTML = "";
+    buttonBoxEl.classList.add("hidden");
+    initialsBoxEl.classList.remove("hidden");
+    for (answer of answers) {
+        answer.classList.add("hidden")
+    }
     for (k=0; k < initialsArray.length; k++) {
         let initialsDiv = document.createElement("button");
         initialsDiv.classList.add("btn", "btn-warning", "my-2", "not-active");
         initialsDiv.textContent = initialsArray[k][0] + ": " + initialsArray[k][1];
-        buttonBoxEl.appendChild(initialsDiv);
+        initialsBoxEl.appendChild(initialsDiv);
     }
 };
 
@@ -121,7 +134,21 @@ function addToLocalStorage(key, value, score) {
 
 
 
-//FUNCTIONS
+//PRIMARY FUNCTIONS
+
+//begin timer
+function timerCountDown() {
+    questionTimer = setInterval(function(){
+        timeLeft --;
+        writeTime();
+
+        if (timeLeft === 0) {
+            endQuiz();
+        };//end if
+    }, 1000);// end questionTimer interval
+}//end timerCountDown()
+
+
 
 //switch to next
 function nextQuestion(){
@@ -153,14 +180,38 @@ function nextQuestion(){
 };//end nextQuestion()
 
 
+
 //begin quiz
 function beginQuiz() {
+
+    //initialize values
+    document.getElementById("time-bubble").removeEventListener("click", beginQuiz);
+    makeBeginningHTML();
+    pastQuestionIndexes = [];
+    pastAnswerIndexes = [];
+    currentScore = 0;
+    writeScore();
+    timeLeft = 60;
+    writeTime();
+    document.getElementById("time-text-path").innerHTML = "T i m e &nbsp L e f t"
+    initialsBoxEl.innerHTML = '';
+    initialsBoxEl.classList.add("hidden");
+    buttonBoxEl.classList.remove("hidden");
+    for (answer of answers) {
+        answer.classList.remove("hidden")
+    }
+
+    //set elements for quiz questions
     questionButton.classList.add("not-active");
     for (button of answers) {
         button.classList.remove("not-active");
     };//end for
+
+    //begin quiz
+    timerCountDown();
     nextQuestion();
 };//end beginQuiz()
+
 
 
 //select multiple choice answer
@@ -175,6 +226,7 @@ function submitAnswer(event) {
             console.log("right " + JSQuestions[index].answer);
         } else {
             currentScore -= 1;
+            timeLeft -= 5;
             writeScore();            
             nextQuestion();
             console.log("wrong " + JSQuestions[index].answer);
@@ -184,39 +236,74 @@ function submitAnswer(event) {
 
 
 
+function calculateFinalScore(){
+    let timeHolder = 0;
+    const scoreInterval = setInterval(function(){
+        timeLeft --;
+        timeHolder ++;
+        if (timeLeft >= 0){
+            writeTime();
+        };//end if  
+        console.log(timeHolder);
+        if (timeHolder % 5 === 0) {
+            currentScore ++;
+            writeScore();
+        };//end if
+        if (timeLeft <= 0){
+            clearInterval(scoreInterval);
+            writeScore();
+        };//end if
+    }, 100);
+
+
+};//end calculateFinalScore()
+
+
+
 //end of quiz behavior
 function endQuiz() {
     console.log("quiz ended");
+    clearInterval(questionTimer);
 
+    calculateFinalScore();
 
     //new div
-    const instructionDiv = document.createElement("div");
-    instructionDiv.textContent = "Type your initials here!";
-    quizBox.prepend(instructionDiv);
-    questionEl.innerHTML = "<input id='userInitials' class='input-style'></input>";
-    questionEl.style.padding = "2vw";
-    questionEl.style.border = "fuchsia solid 2px";
+    instructionsEl.classList.remove("hidden")
+    questionEl.classList.add("hidden");
+    inputEl.classList.remove("hidden");
     //new div's event listener
-    questionEl.addEventListener("keypress", function(e){
+    inputEl.addEventListener("keypress", function(e){
         if (e.key === "Enter") {
             addToLocalStorage("userInitials", e.target.value, currentScore);
             e.target.value = '';
-            questionEl.innerHTML = "⭐High Score Hall of Fame⭐"
-            instructionDiv.classList.add("hidden");
+            inputEl.classList.add("hidden");
+            questionEl.classList.remove("hidden")
+            questionButton.textContent = "⭐High Score Hall of Fame⭐"
+            instructionsEl.classList.add("hidden");
             //set up initials
             writeInitials();
-    }//end if
-});//end questionEl event listener function
+
+            //make restart button
+            document.getElementById("time-text-path").innerHTML = " &nbsp R e s t a r t ?";
+            timeText.textContent = "✔️"
+            document.getElementById("time-bubble").addEventListener("click", beginQuiz);
+
+        };//end if
+    });//end questionEl event listener function
 
     const endMessage = ["Good", "job", "you're", "done!"]
     for (let k = 0; k<4; k++) {
         answers[k].classList.add("not-active");
         answers[k].textContent = endMessage[k];
     };//end for
+
+
 };//end endQuiz()
 
 
+function makeBeginningHTML(){
 
+}
 
 
 
