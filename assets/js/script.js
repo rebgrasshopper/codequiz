@@ -88,31 +88,36 @@ function random(num){
 
 function writeScore() {
     scoreText.textContent = currentScore;
-}
-
-function getUserInitials() {
-    console.log("this is for getting initials");
-}
+};
 
 function writeInitials(){
-    for (answer of answers){
-        answer.textContent = "---";
+    let initialsArray = getLocalStorageOrDefault("userInitials");
+    buttonBoxEl.innerHTML = "";
+    for (k=0; k < initialsArray.length; k++) {
+        let initialsDiv = document.createElement("button");
+        initialsDiv.classList.add("btn", "btn-warning", "my-2", "not-active");
+        initialsDiv.textContent = initialsArray[k][0] + ": " + initialsArray[k][1];
+        buttonBoxEl.appendChild(initialsDiv);
     }
 };
 
 function getLocalStorageOrDefault(key) {
     if (localStorage.getItem(key) === null) {
-        return ["no users recorded!"];
+        return [];
     } else {
-        return JSON.parse(localStorage.getItem(key));
+        let tempArray = JSON.parse(localStorage.getItem(key));
+        tempArray.sort(function(a,b) {
+            return (parseInt(b[1]) - parseInt(a[1]))
+        });
+        return tempArray;
     }
-}
+};
 
-function addToLocalStorage(key, value) {
+function addToLocalStorage(key, value, score) {
     let storedItem = getLocalStorageOrDefault(key);
-    storedItem.push(value);
+    storedItem.push([value, score]);
     localStorage.setItem(key, JSON.stringify(storedItem));
-}
+};
 
 
 
@@ -194,12 +199,11 @@ function endQuiz() {
     //new div's event listener
     questionEl.addEventListener("keypress", function(e){
         if (e.key === "Enter") {
-            userInitials.push(e.target.value);
+            addToLocalStorage("userInitials", e.target.value, currentScore);
             e.target.value = '';
             questionEl.innerHTML = "⭐High Score Hall of Fame⭐"
             instructionDiv.classList.add("hidden");
             //set up initials
-            getUserInitials();
             writeInitials();
     }//end if
 });//end questionEl event listener function
