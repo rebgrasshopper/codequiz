@@ -14,9 +14,9 @@ body {
 /*  MAIN CONTENT  */
 
 header {
-    margin-top: 5rem;
-    font-size: 7vw;
-    padding: 3vw;
+    margin-top: 4rem;
+    font-size: 5vw;
+    padding: 1.5vw;
     background: yellowgreen;
     border: rgb(194, 247, 88) solid 2px;
     border-radius: 15px;
@@ -28,20 +28,7 @@ header {
 /*   BUBBLES   */
 
 SVG {
-    margin-top: 5vw;
-}
-
-#time-left {
-    height: 60px;
-    width: 60px;
-    margin: 5px;
-    margin-top: 10px;
-    border-radius: 50%;
-    font-size: 1.5em;
-    background-color: #EF5B5B;
-    border: none;
-    color: #fdfdfd;
-    cursor: pointer;
+    margin-top: 4vw;
 }
 
 textPath {
@@ -50,7 +37,7 @@ textPath {
 }
 
 #timer-text, #score-text {
-    font-size: 4vw;
+    font-size: 3vw;
 
 }
 
@@ -64,7 +51,7 @@ textPath {
 
     background: #20a39e;
     border: #32f7f0 2px solid;
-    padding: 7vw;
+    padding: 4vw;
     margin: auto;
     margin-top: 2vw;
     border-radius: 15px;
@@ -100,7 +87,7 @@ textPath {
 }
 
 #button-box {
-    margin-top: 5vw;
+    margin-top: 3vw;
     border-radius: 15px;
 }
 
@@ -125,4 +112,11 @@ textPath {
     background-color: fuchsia;
     border: 2px solid;
     border-radius: 15px;
+}
+
+@Media screen and (max-width: 700px) {
+    #timer-text, #score-text {
+        font-size: 4vw;
+    
+    }
 }

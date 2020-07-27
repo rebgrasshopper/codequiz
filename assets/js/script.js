@@ -79,7 +79,6 @@ let pastQuestionIndexes = [];
 let pastAnswerIndexes = [];
 let index;
 let currentScore = 0;
-let userInitials = getLocalStorageOrDefault("userInitials");
 let timeLeft = 60;
 let questionTimer;
 
@@ -99,54 +98,123 @@ function writeTime() {
     timeText.textContent = timeLeft;
 };
 
+
+
+//LOCAL STORAGE FUNCTIONS
+
 function writeInitials(){
+    console.log(`WI: writing. First step: call getLocalStorageOrDefault`);
     let initialsArray = getLocalStorageOrDefault("userInitials");
+    console.log(`WI: getting userInitials: ${initialsArray}`);
     buttonBoxEl.classList.add("hidden");
     initialsBoxEl.classList.remove("hidden");
     for (answer of answers) {
         answer.classList.add("hidden")
-    }
+    }//end for
     for (k=0; k < initialsArray.length; k++) {
         let initialsDiv = document.createElement("button");
         initialsDiv.classList.add("btn", "btn-warning", "my-2", "not-active");
         initialsDiv.textContent = initialsArray[k][0] + ": " + initialsArray[k][1];
         initialsBoxEl.appendChild(initialsDiv);
-    }
-};
+    }//end for
+};//end writeInitials()
 
 function getLocalStorageOrDefault(key) {
+    console.log(`GL: getting from storage: key: ${key}`);
     if (localStorage.getItem(key) === null) {
+        console.log(`GL: local storage was empty`);
         return [];
     } else {
         let tempArray = JSON.parse(localStorage.getItem(key));
+        console.log(`GL: got userInitials from local storage as tempArray: ${tempArray}`);
         tempArray.sort(function(a,b) {
             return (parseInt(b[1]) - parseInt(a[1]))
         });
+        console.log(`GL: sorted tempArray: ${tempArray}`);
         return tempArray;
-    }
-};
+    }//end if else
+};//end getLocalStorageOrDefault()
 
 function addToLocalStorage(key, value, score) {
+    console.log(`AL: adding to local storage: key: ${key}, value: ${value}, score ${score}.` );
     let storedItem = getLocalStorageOrDefault(key);
+    console.log(`AL: getting userInitials as storedItem: ${storedItem}`);
     storedItem.push([value, score]);
+    console.log(`AL: pushed ${value}, ${score}, new value: ${storedItem}`);
     localStorage.setItem(key, JSON.stringify(storedItem));
-};
+    console.log(`AL: set userInitials to local storage as: ${key}, ${JSON.stringify(storedItem)}`);
+};//end addToLocalStorage()
 
 
 
 //PRIMARY FUNCTIONS
 
-//begin timer
-function timerCountDown() {
-    questionTimer = setInterval(function(){
-        timeLeft --;
-        writeTime();
 
-        if (timeLeft === 0) {
-            endQuiz();
+
+//end of quiz behavior
+function endQuiz() {
+    console.log("QE: quiz ended");
+    clearInterval(questionTimer);
+    calculateFinalScore();
+
+    //button end messages
+    const endMessage = ["Good", "job", "you're", "done!"]
+    for (let k = 0; k<4; k++) {
+        answers[k].classList.add("not-active");
+        answers[k].textContent = endMessage[k];
+    };//end for
+
+    //new div
+    instructionsEl.classList.remove("hidden")
+    questionEl.classList.add("hidden");
+    inputEl.classList.remove("hidden");
+
+    //new div's event listener
+    inputEl.addEventListener("keypress", function(e){
+        if (e.key === "Enter") {
+            if (e.target.value !== ''){
+                console.log("QE: calling addToLocalStorage");
+                addToLocalStorage("userInitials", e.target.value, currentScore);
+                console.log(`EQ: added to userInitials: ${e.target.value}, ${currentScore}`);
+                e.target.value = '';
+                inputEl.classList.add("hidden");
+                questionEl.classList.remove("hidden")
+                questionButton.textContent = "⭐High Score Hall of Fame⭐"
+                instructionsEl.classList.add("hidden");
+                //set up initials
+                console.log("QE: calling writeInitials");
+                writeInitials();    
+            }//end if
+
+            //make restart button
+            document.getElementById("time-text-path").innerHTML = " &nbsp R e s t a r t ?";
+            timeText.textContent = "✔️"
+            document.getElementById("time-bubble").addEventListener("click", beginQuiz);
+
         };//end if
-    }, 1000);// end questionTimer interval
-}//end timerCountDown()
+    });//end questionEl event listener function
+};//end endQuiz()
+
+
+
+function calculateFinalScore(){
+    let timeHolder = 0;
+    const scoreInterval = setInterval(function(){
+        timeLeft --;
+        timeHolder ++;
+        if (timeLeft >= 0){
+            writeTime();
+        };//end if  
+        if (timeHolder % 5 === 0) {
+            currentScore ++;
+            writeScore();
+        };//end if
+        if (timeLeft <= 0){
+            clearInterval(scoreInterval);
+            writeScore();
+        };//end if
+    }, 100);
+};//end calculateFinalScore()
 
 
 
@@ -181,12 +249,45 @@ function nextQuestion(){
 
 
 
+
+//select multiple choice answer
+function submitAnswer(event) {
+    if (event.target.matches("button")) {
+        let userAnswer = event.target.textContent;
+        if (userAnswer === JSQuestions[index].answer) {
+            currentScore += 1;
+            writeScore();
+            nextQuestion();
+        } else {
+            currentScore -= 1;
+            timeLeft -= 5;
+            writeScore();            
+            nextQuestion();
+        };//end if else
+    };//end if
+};//end submitAnswer()
+
+
+
+//begin timer
+function timerCountDown() {
+    questionTimer = setInterval(function(){
+        timeLeft --;
+        writeTime();
+
+        if (timeLeft === 0) {
+            endQuiz();
+        };//end if
+    }, 1000);// end questionTimer interval
+}//end timerCountDown()
+
+
+
 //begin quiz
 function beginQuiz() {
 
     //initialize values
     document.getElementById("time-bubble").removeEventListener("click", beginQuiz);
-    makeBeginningHTML();
     pastQuestionIndexes = [];
     pastAnswerIndexes = [];
     currentScore = 0;
@@ -211,100 +312,6 @@ function beginQuiz() {
     timerCountDown();
     nextQuestion();
 };//end beginQuiz()
-
-
-
-//select multiple choice answer
-function submitAnswer(event) {
-    if (event.target.matches("button")) {
-        let userAnswer = event.target.textContent;
-        console.log(`user answer: ${userAnswer}, correct answer: ${JSQuestions[index].answer}`);
-        if (userAnswer === JSQuestions[index].answer) {
-            currentScore += 1;
-            writeScore();
-            nextQuestion();
-            console.log("right " + JSQuestions[index].answer);
-        } else {
-            currentScore -= 1;
-            timeLeft -= 5;
-            writeScore();            
-            nextQuestion();
-            console.log("wrong " + JSQuestions[index].answer);
-        };//end if else
-    };//end if
-};//end submitAnswer()
-
-
-
-function calculateFinalScore(){
-    let timeHolder = 0;
-    const scoreInterval = setInterval(function(){
-        timeLeft --;
-        timeHolder ++;
-        if (timeLeft >= 0){
-            writeTime();
-        };//end if  
-        console.log(timeHolder);
-        if (timeHolder % 5 === 0) {
-            currentScore ++;
-            writeScore();
-        };//end if
-        if (timeLeft <= 0){
-            clearInterval(scoreInterval);
-            writeScore();
-        };//end if
-    }, 100);
-
-
-};//end calculateFinalScore()
-
-
-
-//end of quiz behavior
-function endQuiz() {
-    console.log("quiz ended");
-    clearInterval(questionTimer);
-
-    calculateFinalScore();
-
-    //new div
-    instructionsEl.classList.remove("hidden")
-    questionEl.classList.add("hidden");
-    inputEl.classList.remove("hidden");
-    //new div's event listener
-    inputEl.addEventListener("keypress", function(e){
-        if (e.key === "Enter") {
-            addToLocalStorage("userInitials", e.target.value, currentScore);
-            e.target.value = '';
-            inputEl.classList.add("hidden");
-            questionEl.classList.remove("hidden")
-            questionButton.textContent = "⭐High Score Hall of Fame⭐"
-            instructionsEl.classList.add("hidden");
-            //set up initials
-            writeInitials();
-
-            //make restart button
-            document.getElementById("time-text-path").innerHTML = " &nbsp R e s t a r t ?";
-            timeText.textContent = "✔️"
-            document.getElementById("time-bubble").addEventListener("click", beginQuiz);
-
-        };//end if
-    });//end questionEl event listener function
-
-    const endMessage = ["Good", "job", "you're", "done!"]
-    for (let k = 0; k<4; k++) {
-        answers[k].classList.add("not-active");
-        answers[k].textContent = endMessage[k];
-    };//end for
-
-
-};//end endQuiz()
-
-
-function makeBeginningHTML(){
-
-}
-
 
 
 
