@@ -130,8 +130,8 @@ function getLocalStorageOrDefault(key) {
     if (localStorage.getItem(key) === null) {
         return [];
     } else {
-        let tempArray = JSON.parse(localStorage.getItem(key));
-        tempArray.sort(function(a,b) {
+        const tempArray = JSON.parse(localStorage.getItem(key));
+        tempArray.sort(function(a, b) {
             return (parseInt(b[1]) - parseInt(a[1]));
         });
         return tempArray;
@@ -139,7 +139,7 @@ function getLocalStorageOrDefault(key) {
 }//end getLocalStorageOrDefault()
 
 function addToLocalStorage(key, value, score) {
-    let storedItem = getLocalStorageOrDefault(key);
+    const storedItem = getLocalStorageOrDefault(key);
     storedItem.push([value, score]);
     localStorage.setItem(key, JSON.stringify(storedItem));
 }//end addToLocalStorage()
@@ -242,7 +242,7 @@ function nextQuestion(){
             //question setup
             questionButton.textContent = JSQuestions[index].question;
             for (let p=0; p<4;) {
-                let whichAnswer = random(4);
+                const whichAnswer = random(4);
                 if (pastAnswerIndexes.indexOf(whichAnswer) === -1) {
                     answers[p].textContent = JSQuestions[index].multiples[whichAnswer];
                     pastAnswerIndexes.push(whichAnswer);
@@ -261,7 +261,7 @@ function nextQuestion(){
 //select multiple choice answer
 function submitAnswer(event) {
     if (event.target.matches("button")) {
-        let userAnswer = event.target.textContent;
+        const userAnswer = event.target.textContent;
         if (userAnswer === JSQuestions[index].answer) {
             rightMark.classList.remove("hidden");
             window.setTimeout(function(){
@@ -269,7 +269,7 @@ function submitAnswer(event) {
                 writeScore();
                 nextQuestion();
                 rightMark.classList.add("hidden");
-            },500)
+            }, 500);
         } else {
             wrongMark.classList.remove("hidden");
             window.setTimeout(function(){
@@ -278,7 +278,7 @@ function submitAnswer(event) {
                 writeScore();            
                 nextQuestion();
                 wrongMark.classList.add("hidden");
-            }, 500)
+            }, 500);
 
         }//end if else
     }//end if
@@ -315,12 +315,12 @@ function beginQuiz() {
     timeLeft = 60;
     writeTime();
     scoreTextPath.innerHTML = "&nbsp &nbsp &nbspS c o r e";
-    timeTextPath.innerHTML = "T i m e &nbsp L e f t"
+    timeTextPath.innerHTML = "T i m e &nbsp L e f t";
     initialsBoxEl.innerHTML = '';
     initialsBoxEl.classList.add("hidden");
     buttonBoxEl.classList.remove("hidden");
     for (answer of answers) {
-        answer.classList.remove("hidden")
+        answer.classList.remove("hidden");
     }
 
     //set elements for quiz questions
