@@ -1,9 +1,15 @@
 //ELEMENT VARIABLES
 
-const quizBox = document.getElementById("quiz-box");
+//BUBBLE ELEMENTS
+const scoreBubble = document.getElementById("score-bubble");
+const timeBubble = document.getElementById("time-bubble");
 const scoreText = document.getElementById("score-text");
 const timeText = document.getElementById("timer-text");
-const instructionsEl = document.getElementById("instructions-el")
+const scoreTextPath = document.getElementById("score-text-path");
+const timeTextPath = document.getElementById("time-text-path");
+
+//QUIZ BOX ELEMENTS
+const instructionsEl = document.getElementById("instructions-el");
 const inputEl = document.getElementById("input-el");
 const questionEl = document.getElementById("question-el");
 const questionButton = document.getElementById("question-button");
@@ -16,6 +22,7 @@ const answerD = document.getElementById("d");
 const answers = [answerA, answerB, answerC, answerD];
 const rightMark = document.getElementById("right-div");
 const wrongMark = document.getElementById("wrong-div");
+
 
 
 //QUESTION VARIABLE
@@ -72,7 +79,7 @@ const JSQuestions = [
     multiples:['click', 'resize', 'mouseover', 'clickup'],
     answer:'clickup',
     },
-]
+];
 
 
 //HELPER VARIABLES
@@ -90,62 +97,58 @@ let questionTimer;
 
 function random(num){
     return Math.floor(Math.random() * num);
-};
+}
 
 function writeScore() {
     scoreText.textContent = currentScore;
-};
+}
 
 function writeTime() {
     timeText.textContent = timeLeft;
-};
+}
 
 
 
 //LOCAL STORAGE FUNCTIONS
 
 function writeInitials(){
-    console.log(`WI: writing. First step: call getLocalStorageOrDefault`);
-    let initialsArray = getLocalStorageOrDefault("userInitials");
-    console.log(`WI: getting userInitials: ${initialsArray}`);
+    const initialsArray = getLocalStorageOrDefault("userInitials");
     buttonBoxEl.classList.add("hidden");
     initialsBoxEl.classList.remove("hidden");
-    for (answer of answers) {
-        answer.classList.add("hidden")
+    for (const answer of answers) {
+        answer.classList.add("hidden");
     }//end for
     for (k=0; k < initialsArray.length; k++) {
-        let initialsDiv = document.createElement("button");
+        const initialsDiv = document.createElement("button");
         initialsDiv.classList.add("btn", "btn-warning", "my-2", "not-active");
         initialsDiv.textContent = initialsArray[k][0] + ": " + initialsArray[k][1];
         initialsBoxEl.appendChild(initialsDiv);
     }//end for
-};//end writeInitials()
+}//end writeInitials()
 
 function getLocalStorageOrDefault(key) {
-    console.log(`GL: getting from storage: key: ${key}`);
     if (localStorage.getItem(key) === null) {
-        console.log(`GL: local storage was empty`);
         return [];
     } else {
         let tempArray = JSON.parse(localStorage.getItem(key));
-        console.log(`GL: got userInitials from local storage as tempArray: ${tempArray}`);
         tempArray.sort(function(a,b) {
-            return (parseInt(b[1]) - parseInt(a[1]))
+            return (parseInt(b[1]) - parseInt(a[1]));
         });
-        console.log(`GL: sorted tempArray: ${tempArray}`);
         return tempArray;
     }//end if else
-};//end getLocalStorageOrDefault()
+}//end getLocalStorageOrDefault()
 
 function addToLocalStorage(key, value, score) {
-    console.log(`AL: adding to local storage: key: ${key}, value: ${value}, score ${score}.` );
     let storedItem = getLocalStorageOrDefault(key);
-    console.log(`AL: getting userInitials as storedItem: ${storedItem}`);
     storedItem.push([value, score]);
-    console.log(`AL: pushed ${value}, ${score}, new value: ${storedItem}`);
     localStorage.setItem(key, JSON.stringify(storedItem));
-    console.log(`AL: set userInitials to local storage as: ${key}, ${JSON.stringify(storedItem)}`);
-};//end addToLocalStorage()
+}//end addToLocalStorage()
+
+
+function clearLocalStorage(){
+    localStorage.clear();
+    initialsBoxEl.textContent = '';
+}//end clearLocalStorage()
 
 
 
@@ -155,19 +158,18 @@ function addToLocalStorage(key, value, score) {
 
 //end of quiz behavior
 function endQuiz() {
-    console.log("QE: quiz ended");
     clearInterval(questionTimer);
     calculateFinalScore();
 
     //button end messages
-    const endMessage = ["Good", "job", "you're", "done!"]
+    const endMessage = ["Good", "job", "you're", "done!"];
     for (let k = 0; k<4; k++) {
         answers[k].classList.add("not-active");
         answers[k].textContent = endMessage[k];
-    };//end for
+    }//end for
 
     //new div
-    instructionsEl.classList.remove("hidden")
+    instructionsEl.classList.remove("hidden");
     questionEl.classList.add("hidden");
     inputEl.classList.remove("hidden");
 
@@ -175,36 +177,31 @@ function endQuiz() {
     inputEl.addEventListener("keypress", function(e){
         if (e.key === "Enter") {
             if (e.target.value !== ''){
-                console.log("QE: calling addToLocalStorage");
                 addToLocalStorage("userInitials", e.target.value, currentScore);
-                console.log(`EQ: added to userInitials: ${e.target.value}, ${currentScore}`);
                 e.target.value = '';
                 inputEl.classList.add("hidden");
-                questionEl.classList.remove("hidden")
-                questionButton.textContent = "⭐High Score Hall of Fame⭐"
+                questionEl.classList.remove("hidden");
+                questionButton.textContent = "⭐High Score Hall of Fame⭐";
                 instructionsEl.classList.add("hidden");
                 //set up initials
-                console.log("QE: calling writeInitials");
                 writeInitials();    
             }//end if
 
             //make restart button
-            document.getElementById("time-text-path").innerHTML = " &nbsp R e s t a r t ?";
-            timeText.textContent = "✔️"
-            document.getElementById("time-bubble").addEventListener("click", beginQuiz);
+            timeTextPath.innerHTML = " &nbsp R e s t a r t ?";
+            timeText.textContent = "✔️";
+            timeBubble.classList.add("pointer");
+            timeBubble.addEventListener("click", beginQuiz);
 
             //make clear button
-            document.getElementById("score-text-path").innerHTML = "&nbsp Clear Scores";
-            scoreText.textContent = "🆑"
-            document.getElementById("score-bubble").addEventListener("click", function(){
-                console.log("clear clicked");
-                localStorage.clear();
-                initialsBoxEl.textContent = '';
-            });
+            scoreTextPath.innerHTML = "&nbsp Clear Scores";
+            scoreText.textContent = "🆑";
+            scoreBubble.classList.add("pointer");
+            scoreBubble.addEventListener("click", clearLocalStorage);
 
-        };//end if
+        }//end if
     });//end questionEl event listener function
-};//end endQuiz()
+}//end endQuiz()
 
 
 
@@ -215,17 +212,17 @@ function calculateFinalScore(){
         timeHolder ++;
         if (timeLeft >= 0){
             writeTime();
-        };//end if  
+        }//end if  
         if (timeHolder % 5 === 0) {
             currentScore ++;
             writeScore();
-        };//end if
+        }//end if
         if (timeLeft <= 0){
             clearInterval(scoreInterval);
             writeScore();
-        };//end if
+        }//end if
     }, 100);
-};//end calculateFinalScore()
+}//end calculateFinalScore()
 
 
 
@@ -256,7 +253,7 @@ function nextQuestion(){
             done = true;//found a unique index and filled the elements with its information
         }//end else
     }//end while
-};//end nextQuestion()
+}//end nextQuestion()
 
 
 
@@ -283,9 +280,9 @@ function submitAnswer(event) {
                 wrongMark.classList.add("hidden");
             }, 500)
 
-        };//end if else
-    };//end if
-};//end submitAnswer()
+        }//end if else
+    }//end if
+}//end submitAnswer()
 
 
 
@@ -295,9 +292,9 @@ function timerCountDown() {
         timeLeft --;
         writeTime();
 
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
             endQuiz();
-        };//end if
+        }//end if
     }, 1000);// end questionTimer interval
 }//end timerCountDown()
 
@@ -307,15 +304,18 @@ function timerCountDown() {
 function beginQuiz() {
 
     //initialize values
-    document.getElementById("time-bubble").removeEventListener("click", beginQuiz);
-    document.getElementById("score-text-path").innerHTML = "&nbsp &nbsp &nbspS c o r e";
+    timeBubble.removeEventListener("click", beginQuiz);
+    scoreBubble.removeEventListener("click", clearLocalStorage);
+    timeBubble.classList.remove("pointer");
+    scoreBubble.classList.remove("pointer");
     pastQuestionIndexes = [];
     pastAnswerIndexes = [];
     currentScore = 0;
     writeScore();
     timeLeft = 60;
     writeTime();
-    document.getElementById("time-text-path").innerHTML = "T i m e &nbsp L e f t"
+    scoreTextPath.innerHTML = "&nbsp &nbsp &nbspS c o r e";
+    timeTextPath.innerHTML = "T i m e &nbsp L e f t"
     initialsBoxEl.innerHTML = '';
     initialsBoxEl.classList.add("hidden");
     buttonBoxEl.classList.remove("hidden");
@@ -332,7 +332,7 @@ function beginQuiz() {
     //begin quiz
     timerCountDown();
     nextQuestion();
-};//end beginQuiz()
+}//end beginQuiz()
 
 
 
