@@ -14,6 +14,8 @@ const answerB = document.getElementById("b");
 const answerC = document.getElementById("c");
 const answerD = document.getElementById("d");
 const answers = [answerA, answerB, answerC, answerD];
+const rightMark = document.getElementById("right-div");
+const wrongMark = document.getElementById("wrong-div");
 
 
 //QUESTION VARIABLE
@@ -191,6 +193,15 @@ function endQuiz() {
             timeText.textContent = "✔️"
             document.getElementById("time-bubble").addEventListener("click", beginQuiz);
 
+            //make clear button
+            document.getElementById("score-text-path").innerHTML = "&nbsp Clear Scores";
+            scoreText.textContent = "🆑"
+            document.getElementById("score-bubble").addEventListener("click", function(){
+                console.log("clear clicked");
+                localStorage.clear();
+                initialsBoxEl.textContent = '';
+            });
+
         };//end if
     });//end questionEl event listener function
 };//end endQuiz()
@@ -255,14 +266,23 @@ function submitAnswer(event) {
     if (event.target.matches("button")) {
         let userAnswer = event.target.textContent;
         if (userAnswer === JSQuestions[index].answer) {
-            currentScore += 1;
-            writeScore();
-            nextQuestion();
+            rightMark.classList.remove("hidden");
+            window.setTimeout(function(){
+                currentScore += 1;
+                writeScore();
+                nextQuestion();
+                rightMark.classList.add("hidden");
+            },500)
         } else {
-            currentScore -= 1;
-            timeLeft -= 5;
-            writeScore();            
-            nextQuestion();
+            wrongMark.classList.remove("hidden");
+            window.setTimeout(function(){
+                currentScore -= 1;
+                timeLeft -= 5;
+                writeScore();            
+                nextQuestion();
+                wrongMark.classList.add("hidden");
+            }, 500)
+
         };//end if else
     };//end if
 };//end submitAnswer()
@@ -288,6 +308,7 @@ function beginQuiz() {
 
     //initialize values
     document.getElementById("time-bubble").removeEventListener("click", beginQuiz);
+    document.getElementById("score-text-path").innerHTML = "&nbsp &nbsp &nbspS c o r e";
     pastQuestionIndexes = [];
     pastAnswerIndexes = [];
     currentScore = 0;

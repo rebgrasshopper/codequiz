@@ -3,10 +3,9 @@ body {
     margin: 0 auto;
 }
 
-
-
-
-
+.hidden {
+    display: none;
+}
 
 
 
@@ -44,7 +43,6 @@ textPath {
 
 
 
-
 /*  QUIZ  */
 
 #quiz-box {
@@ -57,15 +55,16 @@ textPath {
     border-radius: 15px;
 }
 
-#input-el {
-    background: rgb(192, 17, 192);
-    border-radius: 15px;
-    min-width: 200px;
-    padding: 2vw;
-    color: #fff;
-    border: fuchsia solid 2px;
+
+/*RIGHT/WRONG STAMPS*/
+#right-div, #wrong-div {
+    z-index: 100000;
+    font-size: 240px;
+    transform: translate(0px, -280px);
 }
 
+
+/*QUESTIONS AND ANSWERS*/
 #question-el {
     background: rgb(192, 17, 192);
     border-radius: 15px;
@@ -82,10 +81,6 @@ textPath {
     color: #fff;
 }
 
-.not-active {
-    pointer-events: none;
-}
-
 #button-box {
     margin-top: 3vw;
     border-radius: 15px;
@@ -96,16 +91,19 @@ textPath {
     border-width: 2px;
 }
 
+.not-active { /*turn clicking mouse pointer off when buttons aren't functioning as buttons*/
+    pointer-events: none;
+}
 
 
-
-
-
-
-
-
-.hidden {
-    display: none;
+/*INPUT*/
+#input-el {
+    background: rgb(192, 17, 192);
+    border-radius: 15px;
+    min-width: 200px;
+    padding: 2vw;
+    color: #fff;
+    border: fuchsia solid 2px;
 }
 
 .input-style {
@@ -114,9 +112,27 @@ textPath {
     border-radius: 15px;
 }
 
+
+
+
+
+
+
+
+/* adjust bubble font size and stamp positioning at smaller screen sizes*/
 @Media screen and (max-width: 700px) {
     #timer-text, #score-text {
         font-size: 4vw;
+    }
+
+    #wrong-div, #right-div {
+        transform: translate(0px, -250px);
+    }
+}
+
+@Media screen and (max-width: 500px) {
+    #timer-text, #score-text {
+        font-size: 5vw;
     
     }
 }
