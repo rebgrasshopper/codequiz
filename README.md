@@ -1,57 +1,42 @@
-# codequiz
-timed quiz project
+# CODE QUIZ
+A timed JavaScript code quiz project
 
+![screenshot of JavaScript code quiz](./assets/images/screenshot.png)
+https://rebgrasshopper.github.io/codequiz/
 
-# 04 Web APIs: Code Quiz
+Table of Contents:
 
-As you proceed in your career as a web developer, you will probably be asked to complete a coding assessment, which is typically a combination of multiple-choice questions and interactive challenges. Build a timed code quiz with multiple-choice questions. This app will run in the browser and feature dynamically updated HTML and CSS powered by your JavaScript code. It will also feature a clean and polished user interface and be responsive, ensuring that it adapts to multiple screen sizes.
+- [Section 1: Introduction](#introduction)
+- [Section 2: Usage](#usage)
+- [Section 3: Credits](#credits)
+- [Section 4: License](#license)
 
-## User Story
+## Introduction ##
 
-```
-AS A coding bootcamp student
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
-```
+This project can be accessed from any browser on an internet-connected device. It uses a button/input interface to display and answer questions and accept user initials to store in high scores, and saves high scores to local storage.
 
-## Acceptance Criteria
+This quiz contains ten JavaScript code questions, compiled or inspired from either [JavaScript on Flashcard Machine](https://www.flashcardmachine.com/javascript2.html) or [JavaScript Flashcards by SeanMarkham on Quizlet](https://quizlet.com/5310015/javascript-flash-cards/).
 
-```
-GIVEN I am taking a code quiz
+## Usage ##
 
-#setInterval/setTimeout
-WHEN I click the start button
-THEN a timer starts and I am presented with a question
+The source files for this quiz can be accessed through cloning the GitHub repo. The link above will take you to the deployed project.
 
-#event listeners
-WHEN I answer a question
-THEN I am presented with another question
+## Credits ##
 
-#event listeners and modifying elements
-WHEN I answer a question incorrectly
-THEN time is subtracted from the clock
+Thanks to my coding co-op, and you can catch some of 'em here:
 
-# clearInterval/clearTimeout
-WHEN all questions are answered or the timer reaches 0
-THEN the game is over
+- [Zachary Bryan](https://github.com/zacharybryan)
+- [Tim Sanders](https://github.com/tbsanders5)
+- [Nick Konzen](https://github.com/NTKonzen)
+- [Kira Bismuth Lowrey](https://github.com/KILowrey)
+- [Nancy Lambert-Brown](https://github.com/n-lambert)
+- [Mando Estrada](https://github.com/Mando619)
+- [Talia Vazquez](https://github.com/taliavazquez)
+- [Perry Theobald](https://github.com/perrytjr)
+- [Jeneth Diestra](https://github.com/jen6one9)
+- [Matthew Rogers](https://github.com/Rogers-Development-Services)
+- [Jefrrey Choi](https://github.com/jepoy92)
 
-#localStorage
-WHEN the game is over
-THEN I can save my initials and score
-```
+## License ##
 
-The following animation demonstrates the application functionality:
-
-![code quiz](./Assets/04-web-apis-homework-demo.gif)
-
-### Review
-
-You are required to submit the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
-- - -
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
-
+GNU General Public License
