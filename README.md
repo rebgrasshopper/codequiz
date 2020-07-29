@@ -36,6 +36,9 @@ Thanks to my coding co-op, and you can catch some of 'em here:
 - [Jeneth Diestra](https://github.com/jen6one9)
 - [Matthew Rogers](https://github.com/Rogers-Development-Services)
 - [Jefrrey Choi](https://github.com/jepoy92)
+- [Clyde Baron Rapinan](https://github.com/clydebaron2000)
+- [Johnny Lieu](https://github.com/johnnylieu)
+- [Robert Graham](https://github.com/Robmgraham)
 
 ## License ##
 
