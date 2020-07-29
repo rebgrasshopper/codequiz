@@ -1,3 +1,8 @@
+"use strict"
+
+/*global document, window, setInterval, clearInterval, localStorage*/
+/*eslint no-undef: "error"*/
+
 //ELEMENT VARIABLES
 
 //BUBBLE ELEMENTS
@@ -118,7 +123,7 @@ function writeInitials(){
     for (const answer of answers) {
         answer.classList.add("hidden");
     }//end for
-    for (k=0; k < initialsArray.length; k++) {
+    for (let k=0; k < initialsArray.length; k++) {
         const initialsDiv = document.createElement("button");
         initialsDiv.classList.add("btn", "btn-warning", "my-2", "not-active");
         initialsDiv.textContent = initialsArray[k][0] + ": " + initialsArray[k][1];
@@ -229,7 +234,7 @@ function calculateFinalScore(){
 //switch to next
 function nextQuestion(){
     pastAnswerIndexes = [];
-    done = false;
+    let done = false;
     while (done === false) {
         index = random(JSQuestions.length);
         if (JSQuestions.length === pastQuestionIndexes.length) {
@@ -319,15 +324,15 @@ function beginQuiz() {
     initialsBoxEl.innerHTML = '';
     initialsBoxEl.classList.add("hidden");
     buttonBoxEl.classList.remove("hidden");
-    for (answer of answers) {
+    for (let answer of answers) {
         answer.classList.remove("hidden");
     }
 
     //set elements for quiz questions
     questionButton.classList.add("not-active");
-    for (button of answers) {
+    for (let button of answers) {
         button.classList.remove("not-active");
-    };//end for
+    }//end for
 
     //begin quiz
     timerCountDown();
